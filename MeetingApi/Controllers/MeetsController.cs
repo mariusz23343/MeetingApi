@@ -21,20 +21,20 @@ namespace MeetingApi.Controllers
             _repository = repository;
         }
 
-        [HttpPost] //tworzenie spotkania 
+        [HttpPost] 
         public async Task <IActionResult> Post([FromBody] MeetDTO dto)
         {
             var newMeetList = await _repository.AddMeet(dto);
-            List<MeetDTO> meetsToReturn = MapResponse(newMeetList);
+            var meetsToReturn = MeetsMapper.MapResponse(newMeetList);
 
             return Ok(meetsToReturn);
         }
 
-        [HttpDelete] // usunięcie spotkania 
+        [HttpDelete]  
         public async Task<IActionResult> DeleteMeet([FromQuery] int id)
         {
             var newMeetList = await _repository.DeleteMeet(id);
-            List<MeetDTO> meetsToReturn = MapResponse(newMeetList);
+            var meetsToReturn = MeetsMapper.MapResponse(newMeetList);
             return Ok(meetsToReturn);
         }
 
@@ -42,22 +42,10 @@ namespace MeetingApi.Controllers
         public async Task<IActionResult> Get()
         {
             var newMeetList = await _repository.GetMeetsList();
-            List<MeetDTO> meetsToReturn = MapResponse(newMeetList);
+            var meetsToReturn = MeetsMapper.MapResponse(newMeetList);
             return Ok(meetsToReturn);
         }
-        private static List<MeetDTO> MapResponse(List<Meet> newMeetList)
-        {
-            var meetsToReturn = new List<MeetDTO>();
-            foreach (var item in newMeetList)
-            {
-                meetsToReturn.Add(new MeetDTO
-                {
-                    MeetDate = item.MeetDate,
-                    MeetName = item.MeetName
-                });
-            }
-            return meetsToReturn;
-        }
+        
 
     }
 }

@@ -16,9 +16,9 @@ namespace MeetingApi.Controllers
     public class ParticipantsController : ControllerBase
     {
         private readonly IParticipantReposiotry _repository;
-        public ParticipantsController(IParticipantReposiotry participant)
+        public ParticipantsController(IParticipantReposiotry repository)
         {
-            _repository = participant;
+            _repository = repository;
         }
 
         [HttpPost]
@@ -27,7 +27,7 @@ namespace MeetingApi.Controllers
             if(await _repository.CheckParticipantsNumber(dto.MeetId) < 25)
             {
                 var participants = await _repository.AddParticipantToMeet(dto);
-                List<ParticipantDTO> participantsToReturn = MapResponse(participants);
+                var participantsToReturn = MeetsMapper.MapResponse(participants);
 
                 return Ok(participantsToReturn);
             }
@@ -36,21 +36,7 @@ namespace MeetingApi.Controllers
             
         }
 
-        private static List<ParticipantDTO> MapResponse(List<Participant> participants)
-        {
-            var participantsToReturn = new List<ParticipantDTO>();
-            foreach (var item in participants)
-            {
-                participantsToReturn.Add(new ParticipantDTO
-                {
-                    Email = item.Email,
-                    ParticipantName = item.ParticipantName,
-                    MeetId = item.FkMeet
-                });
-            }
-
-            return participantsToReturn;
-        }
+        
 
 
     }
