@@ -1,4 +1,5 @@
-﻿using MeetingApi.Models.DbModels;
+﻿using MeetingApi.Mappers;
+using MeetingApi.Models.DbModels;
 using MeetingApi.Models.DTOs;
 using MeetingApi.Reposiories;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +16,12 @@ namespace MeetingApi.Controllers
     [ApiController]
     public class ParticipantsController : ControllerBase
     {
-        private readonly IParticipantReposiotry _repository;
-        public ParticipantsController(IParticipantReposiotry repository)
+        private readonly IParticipantRepository _repository;
+        private readonly IMeetMapper _mapper;
+        public ParticipantsController(IParticipantRepository repository, IMeetMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -27,7 +30,7 @@ namespace MeetingApi.Controllers
             if(await _repository.CheckParticipantsNumber(dto.MeetId) < 25)
             {
                 var participants = await _repository.AddParticipantToMeet(dto);
-                var participantsToReturn = MeetsMapper.MapResponse(participants);
+                var participantsToReturn = _mapper.MapResponse(participants);
 
                 return Ok(participantsToReturn);
             }

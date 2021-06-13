@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MeetingApi.Reposiories
 {
-    public interface IParticipantReposiotry
+    public interface IParticipantRepository
     {
-        public Task<List<Participant>> AddParticipantToMeet(ParticipantDTO participant);
+        public Task<IList<Participant>> AddParticipantToMeet(ParticipantDTO participant);
         public Task<int> CheckParticipantsNumber(int meetId);
     }
 }

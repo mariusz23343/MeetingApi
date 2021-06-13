@@ -9,9 +9,9 @@ namespace MeetingApi.Reposiories
 {
     public interface IMeetRepository
     {
-        public  Task<List<Meet>> AddMeet(MeetDTO meetDTO);
-        public  Task<List<Meet>> DeleteMeet(int meetId);
-        public  Task<List<Meet>> GetMeetsList();
+        public  Task<IList<Meet>> AddMeet(MeetDTO meetDTO);
+        public  Task<IList<Meet>> DeleteMeet(int meetId);
+        public  Task<IList<Meet>> GetMeetsList();
 
     }
 }

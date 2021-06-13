@@ -1,3 +1,4 @@
+using MeetingApi.Mappers;
 using MeetingApi.Models.DbModels;
 using MeetingApi.Reposiories;
 using Microsoft.AspNetCore.Builder;
@@ -30,7 +31,8 @@ namespace MeetingApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IMeetRepository, MeetRepository>();
-            services.AddScoped<IParticipantReposiotry, ParticipantRepository>();
+            services.AddScoped<IParticipantRepository, ParticipantRepository>();
+            services.AddScoped<IMeetMapper, MeetsMapper>();
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
             services.AddControllers();
             services.AddSwaggerGen(c =>

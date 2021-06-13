@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeetingApi.Reposiories
 {
-    public class ParticipantRepository : IParticipantReposiotry
+    public class ParticipantRepository : IParticipantRepository
     {
         private readonly AppDbContext _context;
         public ParticipantRepository(AppDbContext context)
@@ -17,9 +17,9 @@ namespace MeetingApi.Reposiories
         }
         
 
-        public async Task <List<Participant>> AddParticipantToMeet(ParticipantDTO participant)
+        public async Task <IList<Participant>> AddParticipantToMeet(ParticipantDTO participant)
         {
-            List<Participant> values = null;
+            IList<Participant> values = null;
             
             
                 var tmp = new Participant

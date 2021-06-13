@@ -15,7 +15,7 @@ namespace MeetingApi.Reposiories
         {
             _context = context;
         }
-        public async Task <List<Meet>> AddMeet(MeetDTO meetDTO)
+        public async Task <IList<Meet>> AddMeet(MeetDTO meetDTO)
         {
             var meet = new Meet { MeetName = meetDTO.MeetName, MeetDate = meetDTO.MeetDate };
             await _context.Meets.AddAsync(meet);
@@ -24,7 +24,7 @@ namespace MeetingApi.Reposiories
             return await GetMeetsList();
         }
 
-        public async Task <List<Meet>> DeleteMeet(int meetId)
+        public async Task <IList<Meet>> DeleteMeet(int meetId)
         {
             var tmp = await _context.Meets.FirstOrDefaultAsync(x => x.Id == meetId);
             if (tmp != null)
@@ -37,14 +37,11 @@ namespace MeetingApi.Reposiories
            
         }
 
-        public async Task <List<Meet>> GetMeetsList()
+        public async Task <IList<Meet>> GetMeetsList()
         {
             return await _context.Meets.ToListAsync();
         }
-        //public List<Participant> GetMeetParticipants(int id)
-        //{
-        //    return _context.Meets.
-        //}
+       
         
     }
 }

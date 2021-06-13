@@ -1,4 +1,5 @@
-﻿using MeetingApi.Models.DbModels;
+﻿using MeetingApi.Mappers;
+using MeetingApi.Models.DbModels;
 using MeetingApi.Models.DbModels.DTOs;
 using MeetingApi.Reposiories;
 using Microsoft.AspNetCore.Http;
@@ -15,17 +16,19 @@ namespace MeetingApi.Controllers
     public class MeetsController : ControllerBase
     {
         private readonly IMeetRepository _repository;
+        private readonly IMeetMapper _mapper;
 
-        public MeetsController(IMeetRepository repository)
+        public MeetsController(IMeetRepository repository, IMeetMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpPost] 
         public async Task <IActionResult> Post([FromBody] MeetDTO dto)
         {
             var newMeetList = await _repository.AddMeet(dto);
-            var meetsToReturn = MeetsMapper.MapResponse(newMeetList);
+            var meetsToReturn = _mapper.MapResponse(newMeetList);
 
             return Ok(meetsToReturn);
         }
@@ -34,7 +37,7 @@ namespace MeetingApi.Controllers
         public async Task<IActionResult> DeleteMeet([FromQuery] int id)
         {
             var newMeetList = await _repository.DeleteMeet(id);
-            var meetsToReturn = MeetsMapper.MapResponse(newMeetList);
+            var meetsToReturn = _mapper.MapResponse(newMeetList);
             return Ok(meetsToReturn);
         }
 
@@ -42,7 +45,7 @@ namespace MeetingApi.Controllers
         public async Task<IActionResult> Get()
         {
             var newMeetList = await _repository.GetMeetsList();
-            var meetsToReturn = MeetsMapper.MapResponse(newMeetList);
+            var meetsToReturn = _mapper.MapResponse(newMeetList);
             return Ok(meetsToReturn);
         }
         

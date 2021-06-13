@@ -1,4 +1,5 @@
-﻿using MeetingApi.Models.DbModels;
+﻿using MeetingApi.Mappers;
+using MeetingApi.Models.DbModels;
 using MeetingApi.Models.DbModels.DTOs;
 using MeetingApi.Models.DTOs;
 using System;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MeetingApi
 {
-    public static  class MeetsMapper
+    public  class MeetsMapper : IMeetMapper
     {
-        public static List<MeetDTO> MapResponse(List<Meet> newMeetList)
+        public  IList<MeetDTO> MapResponse(IList<Meet> newMeetList)
         {
             var meetsToReturn = new List<MeetDTO>();
             foreach (var item in newMeetList)
@@ -23,7 +24,7 @@ namespace MeetingApi
             }
             return meetsToReturn;
         }
-        public static List<ParticipantDTO> MapResponse(List<Participant> participants)
+        public  IList<ParticipantDTO> MapResponse(IList<Participant> participants)
         {
             var participantsToReturn = new List<ParticipantDTO>();
             foreach (var item in participants)
