@@ -31,7 +31,20 @@ namespace MeetingApi.Reposiories
             {
                 return null;
             }
+            var meetParticipants =  _context.Participants.Where(p => p.FkMeet == meetId);
+
+            if(meetParticipants != null)
+            {
+               foreach(var item in meetParticipants)
+                {
+                    _context.Participants.Remove(item);
+                }
+                _context.SaveChanges();
+            }
+                
+
             _context.Meets.Remove(tmp);
+            
             await _context.SaveChangesAsync();
 
             return await GetMeetsList();
