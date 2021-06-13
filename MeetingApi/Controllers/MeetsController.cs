@@ -28,9 +28,8 @@ namespace MeetingApi.Controllers
         public async Task <IActionResult> Post([FromBody] MeetDTO dto)
         {
             var newMeetList = await _repository.AddMeet(dto);
-            var meetsToReturn = _mapper.MapResponse(newMeetList);
-
-            return Ok(meetsToReturn);
+            
+             return Ok(_mapper.MapResponse(newMeetList));
         }
 
         [HttpDelete]  
@@ -41,16 +40,15 @@ namespace MeetingApi.Controllers
             if (newMeetList == null) 
                 return NotFound("Nie znaleziono spotkania o podanym ID");
 
-            var meetsToReturn = _mapper.MapResponse(newMeetList);
-            return Ok(meetsToReturn);
+             return Ok(_mapper.MapResponse(newMeetList));
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var newMeetList = await _repository.GetMeetsList();
-            var meetsToReturn = _mapper.MapResponse(newMeetList);
-            return Ok(meetsToReturn);
+           
+            return Ok(_mapper.MapResponse(newMeetList));
         }
         
 
