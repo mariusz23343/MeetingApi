@@ -11,5 +11,6 @@ namespace MeetingApi.Reposiories
     {
         public Task<IList<Participant>> AddParticipantToMeet(ParticipantDTO participant);
         public Task<int> CheckParticipantsNumber(int meetId);
+        public Task<bool> CheckIfMeetExist(int id);
     }
 }

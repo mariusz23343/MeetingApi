@@ -47,5 +47,9 @@ namespace MeetingApi.Reposiories
             var numberOfElements = await _context.Participants.Where(p => p.FkMeet == id).CountAsync();
             return numberOfElements;
         }
+        public async Task <bool> CheckIfMeetExist(int id)
+        {
+            return await _context.Meets.AnyAsync(x => x.Id == id);
+        }
     }
 }

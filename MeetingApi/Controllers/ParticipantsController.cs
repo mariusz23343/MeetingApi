@@ -27,12 +27,14 @@ namespace MeetingApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ParticipantDTO dto)
         {
-            if(await _repository.CheckParticipantsNumber(dto.MeetId) < 25)
+            if (!await _repository.CheckIfMeetExist(dto.MeetId))
+                return BadRequest("Nie ma spotkania o podanym Id");
+
+            else if(await _repository.CheckParticipantsNumber(dto.MeetId) < 25)
             {
                 var participants = await _repository.AddParticipantToMeet(dto);
-                var participantsToReturn = _mapper.MapResponse(participants);
-
-                return Ok(participantsToReturn);
+               
+                return Ok(_mapper.MapResponse(participants));
             }
 
             return BadRequest("Nie można dodać kolejnego uczestnika, osiągnięto limit na tym spotkaniu");
