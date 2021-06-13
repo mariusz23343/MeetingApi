@@ -19,7 +19,7 @@ namespace MeetingApi.Reposiories
 
         public async Task <IList<Participant>> AddParticipantToMeet(ParticipantDTO participant)
         {
-            IList<Participant> values = null;
+            IList<Participant> values = new List<Participant>();
             
             
                 var tmp = new Participant
