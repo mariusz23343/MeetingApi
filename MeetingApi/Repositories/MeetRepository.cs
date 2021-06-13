@@ -27,14 +27,15 @@ namespace MeetingApi.Reposiories
         public async Task <IList<Meet>> DeleteMeet(int meetId)
         {
             var tmp = await _context.Meets.FirstOrDefaultAsync(x => x.Id == meetId);
-            if (tmp != null)
+            if (tmp == null)
             {
-                _context.Meets.Remove(tmp);
+                return null;
             }
+            _context.Meets.Remove(tmp);
             await _context.SaveChangesAsync();
 
             return await GetMeetsList();
-           
+
         }
 
         public async Task <IList<Meet>> GetMeetsList()

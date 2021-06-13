@@ -37,6 +37,10 @@ namespace MeetingApi.Controllers
         public async Task<IActionResult> DeleteMeet([FromQuery] int id)
         {
             var newMeetList = await _repository.DeleteMeet(id);
+
+            if (newMeetList == null) 
+                return NotFound("Nie znaleziono spotkania o podanym ID");
+
             var meetsToReturn = _mapper.MapResponse(newMeetList);
             return Ok(meetsToReturn);
         }
